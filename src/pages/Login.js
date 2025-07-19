@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useAuth } from '../context/AuthContext';
-import FacebookLogin from '@greatsumini/react-facebook-login';
+import FacebookLogin from 'react-facebook-login';
 import { Paper, Typography, Box, Button } from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import { Container } from '@mui/material';
 
 const Login = () => {
     const { login } = useAuth();
 
-    const handleFacebookLoginSuccess = (response) => {
+    const responseFacebook = (response) => {
         console.log('Facebook Login Success!', response);
-        login(response); // Pass the whole response object to the context
-    };
-
-    const handleFacebookLoginFail = (error) => {
-        console.error('Facebook Login Failed!', error);
+        if (response.accessToken) {
+            login(response.accessToken);
+        } else {
+            console.error('Facebook login failed:', response);
+        }
     };
 
     return (
@@ -33,23 +34,12 @@ const Login = () => {
                     Please log in with your Facebook account to manage your WhatsApp templates and messages.
                 </Typography>
                 <FacebookLogin
-                    appId={process.env.REACT_APP_FACEBOOK_APP_ID || ''}
-                    onSuccess={handleFacebookLoginSuccess}
-                    onFail={handleFacebookLoginFail}
+                    appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+                    autoLoad={false}
+                    fields="name,email,picture"
                     scope="email"
-                    render={({ onClick, disabled }) => (
-                        <Button
-                            variant="contained"
-                            startIcon={<FacebookIcon />}
-                            onClick={onClick}
-                            disabled={disabled}
-                            size="large"
-                            fullWidth
-                            sx={{ backgroundColor: '#1877F2', '&:hover': { backgroundColor: '#166eab' } }}
-                        >
-                            Login with Facebook
-                        </Button>
-                    )}
+                    callback={responseFacebook}
+                    icon="fa-facebook"
                 />
             </Paper>
         </Box>
