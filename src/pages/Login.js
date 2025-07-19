@@ -1,16 +1,18 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import React from 'react';
+import { useAuth } from '../context/AuthContext'; // Correctly import useAuth
 import FacebookLogin from '@greatsumini/react-facebook-login';
 import { Container, Paper, Typography, Button } from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
 
 const Login = () => {
-    const { login } = useContext(AuthContext);
+    const { login } = useAuth(); // Use the custom hook
 
     const handleFacebookLoginSuccess = (response) => {
         console.log('Facebook Login Success!', response);
         if (response.accessToken) {
-            login(response.accessToken);
+            // The login function in AuthContext expects the whole response object
+            // to extract the accessToken. Let's pass the whole object.
+            login(response);
         } else {
             console.error('Facebook login failed: No access token', response);
         }
