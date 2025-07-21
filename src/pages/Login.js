@@ -45,7 +45,7 @@ const Login = () => {
                     appId={process.env.REACT_APP_FACEBOOK_APP_ID || ''}
                     onSuccess={handleFacebookLoginSuccess}
                     onFail={handleFacebookLoginFail}
-                    scope="email,whatsapp_business_management,whatsapp_business_messaging"
+                    scope="email,business_management,whatsapp_business_management,whatsapp_business_messaging"
                     render={({ onClick, disabled }) => (
                         <Button
                             variant="contained"
