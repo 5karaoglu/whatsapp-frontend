@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import { jwtDecode } from 'jwt-decode'; // Ensure you have jwt-decode installed: npm install jwt-decode
 import api from '../services/api';
 
@@ -8,19 +8,18 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('authToken'));
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // Keep loading true initially
 
   useEffect(() => {
+    // This effect runs once on component mount to handle the initial token state
     if (token) {
       try {
         const decodedUser = jwtDecode(token);
-        // Check if token is expired
         const isExpired = decodedUser.exp * 1000 < Date.now();
         if (isExpired) {
           logout();
         } else {
           setUser(decodedUser);
-          // Set token for subsequent api calls
           api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         }
       } catch (error) {
@@ -28,11 +27,20 @@ export const AuthProvider = ({ children }) => {
         logout();
       }
     }
-    setLoading(false);
+    // We will set loading to false after the Facebook check is complete.
   }, [token]);
 
-  const login = (fbResponse) => {
+  const logout = useCallback(() => {
+    localStorage.removeItem('authToken');
+    setUser(null);
+    setToken(null);
+    delete api.defaults.headers.common['Authorization'];
+  }, []);
+
+  const login = useCallback((fbResponse) => {
     const accessToken = fbResponse.accessToken;
+    // Set loading to true during the login process
+    setLoading(true);
     // Exchange Facebook token for our app's JWT
     api.post('/auth/facebook', { access_token: accessToken })
       .then(res => {
@@ -46,15 +54,50 @@ export const AuthProvider = ({ children }) => {
       .catch(err => {
           console.error('Error exchanging token:', err);
           logout();
+      })
+      .finally(() => {
+        // Stop loading regardless of the outcome
+        setLoading(false);
       });
-  };
+  }, [logout]);
 
-  const logout = () => {
-    localStorage.removeItem('authToken');
-    setUser(null);
-    setToken(null);
-    delete api.defaults.headers.common['Authorization'];
-  };
+  useEffect(() => {
+    console.log("AuthContext: Attaching function to window object.");
+
+    const failsafeTimer = setTimeout(() => {
+      console.warn("AuthContext Failsafe: Facebook SDK did not respond in 5 seconds. Forcing loading to false.");
+      setLoading(false);
+    }, 5000);
+
+    // Define a global function that the FB SDK can call
+    window.onFacebookLoginStatus = (response) => {
+      clearTimeout(failsafeTimer); // We got a response, clear the timer
+      console.log("AuthContext: window.onFacebookLoginStatus called with:", response);
+      
+      const { status, authResponse } = response;
+
+      if (status === 'connected') {
+        if (!token) {
+          console.log("Auto-logging in with Facebook session.");
+          login(authResponse);
+        }
+      } else {
+        if (token) {
+          console.log("Stale session detected. Logging out.");
+          logout();
+        }
+      }
+      console.log("AuthContext: Finished status check. Setting loading to false.");
+      setLoading(false);
+    };
+
+    return () => {
+      console.log("AuthContext: Unmounting. Cleaning up global function and timer.");
+      clearTimeout(failsafeTimer);
+      // Clean up the global function
+      window.onFacebookLoginStatus = null;
+    };
+  }, [token, login, logout]);
 
   const authContextValue = {
     user,

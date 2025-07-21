@@ -29,6 +29,42 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script>
+      console.log("FB SDK script block initiated.");
+      window.fbAsyncInit = function() {
+        console.log("FB: fbAsyncInit triggered.");
+        FB.init({
+          appId      : '%REACT_APP_FACEBOOK_APP_ID%',
+          cookie     : true,
+          xfbml      : true,
+          version    : 'v20.0'
+        });
+        console.log("FB: FB.init completed.");
+        
+        FB.getLoginStatus(function(response) {
+          console.log("FB: getLoginStatus response received.", response);
+          if (window.onFacebookLoginStatus) {
+            window.onFacebookLoginStatus(response);
+          } else {
+            console.error("FB: onFacebookLoginStatus function not found on window object.");
+          }
+        });
+
+        FB.AppEvents.logPageView();   
+      };
+    
+      (function(d, s, id){
+         console.log("FB: SDK loader function executed.");
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {
+          console.log("FB: JSSDK element already exists.");
+          return;
+         }
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
