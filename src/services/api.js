@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL || '/api',
+  // Point to the correct backend server URL
+  baseURL: process.env.REACT_APP_API_BASE_URL || 'https://whatsapp.mayivo.com/api',
 });
 
 // Add a response interceptor to handle auth errors globally
