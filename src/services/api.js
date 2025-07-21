@@ -1,22 +1,26 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5001/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: process.env.REACT_APP_API_BASE_URL || '/api',
 });
 
-// Interceptor to add the token to every request
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
-    return config;
-  },
+// Add a response interceptor to handle auth errors globally
+api.interceptors.response.use(
+  (response) => response, // Directly return successful responses
   (error) => {
+    // Check if the error is a 401 Unauthorized or 403 Forbidden
+    if (error.response && [401, 403].includes(error.response.status)) {
+      // Don't intercept if the error is for the CREDENTIALS_MISSING case on the login page
+      if (error.response.data?.errorCode !== 'CREDENTIALS_MISSING') {
+        // Clear token from local storage
+        localStorage.removeItem('authToken');
+        // Remove the Authorization header from future requests
+        delete api.defaults.headers.common['Authorization'];
+        // Redirect to login page, replacing the history
+        window.location.href = '/login'; 
+      }
+    }
+    // For all other errors, just pass them along
     return Promise.reject(error);
   }
 );

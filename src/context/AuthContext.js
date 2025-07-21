@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     // Set loading to true during the login process
     setLoading(true);
     // Exchange Facebook token for our app's JWT
-    api.post('/auth/facebook', { access_token: accessToken })
+    return api.post('/auth/facebook', { access_token: accessToken })
       .then(res => {
         const { token: jwtToken } = res.data;
         localStorage.setItem('authToken', jwtToken);
@@ -53,7 +53,9 @@ export const AuthProvider = ({ children }) => {
       })
       .catch(err => {
           console.error('Error exchanging token:', err);
-          logout();
+          logout(); // Clear any partial state
+          setLoading(false); // Ensure loading is stopped
+          throw err; // Re-throw the error to be caught by the caller (Login.js)
       })
       .finally(() => {
         // Stop loading regardless of the outcome
@@ -79,7 +81,9 @@ export const AuthProvider = ({ children }) => {
       if (status === 'connected') {
         if (!token) {
           console.log("Auto-logging in with Facebook session.");
-          login(authResponse);
+          login(authResponse).catch(() => {
+            // Auto-login failed (e.g., credentials missing), do nothing, user stays on login page.
+          });
         }
       } else {
         if (token) {
