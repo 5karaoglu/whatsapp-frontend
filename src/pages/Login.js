@@ -14,15 +14,14 @@ const Login = () => {
         setLoading(true);
         if (response.accessToken) {
             try {
+                // The login function will now handle redirection on success.
                 await login(response);
             } catch (err) {
-                // The login function in AuthContext will now throw an error if the API call fails.
-                // We catch it here to display it to the user.
-                const errorMessage = err.response?.data?.message || 'Login failed. Please try again.';
+                const errorMessage = err.response?.data?.error?.message || err.response?.data?.message || 'Login failed. Please ensure you have linked a WhatsApp Business Account to your Facebook Business profile.';
                 setError(errorMessage);
-            } finally {
                 setLoading(false);
             }
+            // No need for finally block, as login handles redirection or error is set.
         } else {
             setError('Facebook login failed: No access token received.');
             setLoading(false);
@@ -46,7 +45,7 @@ const Login = () => {
                     appId={process.env.REACT_APP_FACEBOOK_APP_ID || ''}
                     onSuccess={handleFacebookLoginSuccess}
                     onFail={handleFacebookLoginFail}
-                    scope="email"
+                    scope="email,whatsapp_business_management,whatsapp_business_messaging"
                     render={({ onClick, disabled }) => (
                         <Button
                             variant="contained"
@@ -57,7 +56,7 @@ const Login = () => {
                             fullWidth
                             sx={{ mt: 3, mb: 2, backgroundColor: '#1877F2', '&:hover': { backgroundColor: '#166eab' } }}
                         >
-                            {loading ? 'Logging in...' : 'Login with Facebook'}
+                            {loading ? 'Configuring Account...' : 'Login with Facebook'}
                         </Button>
                     )}
                 />
