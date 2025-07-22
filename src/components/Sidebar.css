@@ -1,0 +1,159 @@
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background-color: var(--white);
+  border-right: 1px solid #E0E0E0;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: var(--box-shadow);
+}
+
+.sidebar-header {
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.sidebar-logo {
+  font-size: 28px;
+  font-weight: 800;
+  text-align: center;
+  margin: 0;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sidebar-nav {
+  flex-grow: 1;
+}
+
+.nav-category {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dark-grey);
+  text-transform: uppercase;
+  margin: 24px 0 8px 0;
+  letter-spacing: 0.5px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-radius: var(--border-radius-sm);
+  text-decoration: none;
+  color: var(--dark-grey);
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-link:hover {
+  background-color: var(--off-white);
+  color: var(--black);
+}
+
+.nav-link.active {
+  background: var(--primary-gradient);
+  color: var(--white);
+  font-weight: 700;
+  box-shadow: 0 4px 8px -2px rgba(90, 42, 220, 0.3);
+}
+
+.nav-link svg {
+  margin-right: 16px;
+  font-size: 18px;
+  flex-shrink: 0; /* Prevents icons from shrinking */
+}
+
+.nav-link span {
+  margin-left: 0; /* Remove previous margin */
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+  transition: border-color 0.3s;
+}
+
+.theme-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 6px;
+  border-radius: var(--border-radius-lg);
+  background-color: var(--bg-primary);
+  cursor: pointer;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-color);
+  position: relative;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.theme-icon {
+  font-size: 18px;
+  color: var(--text-secondary);
+  transition: color 0.3s;
+  z-index: 1;
+}
+
+.theme-icon.active {
+  color: var(--purple);
+}
+
+.switch-handle {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  height: calc(100% - 8px);
+  background-color: var(--bg-secondary);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease-in-out, background-color 0.3s;
+  z-index: 0;
+}
+
+.switch-handle.dark {
+  transform: translateX(calc(100%));
+}
+
+
+.logout-button {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--border-radius-sm);
+  border: none;
+  background-color: transparent;
+  color: var(--text-secondary);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, color 0.2s;
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+}
+
+.logout-button svg {
+  margin-right: 12px;
+  font-size: 18px;
+}
+
+.logout-button:hover {
+  background-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.logout-button span {
+  margin-left: 0; /* Remove previous margin */
+} 

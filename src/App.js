@@ -1,20 +1,28 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
-import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
 import SendMessage from './pages/SendMessage';
 import CreateTemplate from './pages/CreateTemplate';
 import ListTemplates from './pages/ListTemplates';
 import Settings from './pages/Settings';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
-  const { user } = useAuth();
-
   return (
     <>
-      {user && <Navbar />}
+      <Toaster 
+        position="bottom-right"
+        toastOptions={{
+          duration: 5000,
+          style: {
+            background: 'var(--black)',
+            color: 'var(--white)',
+            borderRadius: 'var(--border-radius-sm)',
+            fontFamily: "'Plus Jakarta Sans', sans-serif",
+          },
+        }}
+      />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route 

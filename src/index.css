@@ -1,6 +1,57 @@
-/* Basic CSS Reset */
+:root {
+  --purple: #6822DC;
+  --sky-blue: #A3D5F3;
+  --pink: #FD4D94;
+  --yellow: #FCB51E;
+  --dark-blue: #2E58C2;
+  --orange: #FD7F2D;
+
+  /* Light Theme Colors */
+  --bg-primary: #F8F9FA;
+  --bg-secondary: #FFFFFF;
+  --text-primary: #212529;
+  --text-secondary: #6C757D;
+  --border-color: #E0E0E0;
+  
+  /* Shared Colors */
+  --white: #FFFFFF;
+  --black: #212529;
+  --grey: #CED4DA;
+
+  /* Gradients */
+  --primary-gradient: linear-gradient(90deg, var(--purple), var(--dark-blue));
+  --secondary-gradient: linear-gradient(90deg, var(--pink), var(--orange));
+
+  /* UI Styles */
+  --border-radius-sm: 8px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 24px;
+
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --box-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #121212;
+  --bg-secondary: #1E1E1E;
+  --text-primary: #E0E0E0;
+  --text-secondary: #A0A0A0;
+  --border-color: #333333;
+
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --box-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+
 body, html {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+* {
+  box-sizing: border-box;
 } 
