@@ -70,7 +70,7 @@ const ListTemplates = () => {
       <Typography variant="h6" gutterBottom>
         {t('listTemplates.empty_state_title')}
       </Typography>
-      <Typography color="textSecondary" sx={{ mb: 3 }}>
+      <Typography sx={{ mb: 3, color: 'var(--text-secondary)' }}>
         {t('listTemplates.empty_state_body')}
       </Typography>
       <Button 
@@ -127,7 +127,7 @@ const ListTemplates = () => {
               >
                 <Box>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-                    <Typography variant="body2" sx={{ color: 'var(--dark-grey)', textTransform: 'uppercase' }}>
+                    <Typography variant="body2" sx={{ color: 'var(--text-secondary)', textTransform: 'uppercase' }}>
                       {template.category}
                     </Typography>
                     <Chip 

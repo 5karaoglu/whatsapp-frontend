@@ -68,7 +68,7 @@ const CreateTemplate = () => {
         <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1 }}>
           {t('createTemplate.title')}
         </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+        <Typography variant="body1" sx={{ mb: 3, color: 'var(--text-secondary)' }}>
           {t('createTemplate.subtitle')}
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
