@@ -20,7 +20,7 @@ const ProtectedRoute = ({ children }) => {
   }
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', minHeight: '100vh' }}>
       <Sidebar />
       <main style={{ 
         flexGrow: 1, 
