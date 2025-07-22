@@ -142,7 +142,11 @@ const SendMessage = () => {
             Send Message
           </Button>
         </Box>
-        {response && <Alert severity="success" sx={{ mt: 2 }}>Message sent successfully! Message ID: {response.messages[0].id}</Alert>}
+        {response?.success && (
+          <Alert severity="success" sx={{ mt: 2 }}>
+            Message sent successfully! Message ID: {response.data?.messages?.[0]?.id || 'N/A'}
+          </Alert>
+        )}
         {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
       </Paper>
     </Container>
