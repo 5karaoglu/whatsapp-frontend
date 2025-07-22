@@ -55,9 +55,9 @@
   transition: background-color 0.2s, color 0.2s;
 }
 
-.nav-link:hover {
-  background-color: var(--off-white);
-  color: var(--black);
+.nav-link:hover:not(.active) {
+  background-color: var(--border-color);
+  color: var(--text-primary);
 }
 
 .nav-link.active {
