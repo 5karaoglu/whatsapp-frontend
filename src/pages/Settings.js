@@ -6,16 +6,19 @@ import {
   InputAdornment, IconButton
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 // Reuse the styled components
 const styledTextField = {
   '& .MuiInputBase-root': {
     borderRadius: 'var(--border-radius-sm)',
-    backgroundColor: 'var(--off-white)',
+    backgroundColor: 'var(--input-bg)',
+    transition: 'background-color 0.3s',
   },
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
-      borderColor: '#E0E0E0',
+      borderColor: 'var(--border-color)',
+      transition: 'border-color 0.3s',
     },
     '&:hover fieldset': {
       borderColor: 'var(--purple)',
@@ -28,6 +31,7 @@ const styledTextField = {
 };
 
 const Settings = () => {
+  const { t } = useTranslation();
   const [credentials, setCredentials] = useState({ phoneNumberId: '', accessToken: '' });
   const [showToken, setShowToken] = useState(false);
 
@@ -42,12 +46,12 @@ const Settings = () => {
           });
         }
       } catch (err) {
-        toast.error('Kaydedilmiş ayarlar yüklenemedi.');
+        toast.error(t('settings.toast_load_error'));
         console.error('Failed to fetch credentials:', err);
       }
     };
     fetchCredentials();
-  }, []);
+  }, [t]);
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -62,24 +66,24 @@ const Settings = () => {
       }
 
       await api.post('/credentials', dataToSend);
-      toast.success('Ayarlar başarıyla kaydedildi!');
+      toast.success(t('settings.toast_save_success'));
       if(dataToSend.accessToken) {
         setCredentials(prev => ({...prev, accessToken: '********' }));
       }
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Ayarlar kaydedilirken bir hata oluştu.');
+      toast.error(err.response?.data?.message || t('settings.toast_save_error'));
       console.error('Failed to save credentials:', err);
     }
   };
 
   return (
     <Container maxWidth="md">
-      <Paper elevation={0} sx={{ p: 4, mt: 4, borderRadius: 'var(--border-radius-lg)', background: 'var(--white)' }}>
+      <Paper elevation={0} sx={{ p: 4, mt: 4, borderRadius: 'var(--border-radius-lg)', background: 'var(--bg-secondary)', transition: 'background-color 0.3s' }}>
         <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1 }}>
-          API Ayarları
+          {t('settings.title')}
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-          WhatsApp Business API bilgilerinizi buraya girin.
+          {t('settings.subtitle')}
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate>
           <TextField
@@ -87,7 +91,7 @@ const Settings = () => {
             required
             fullWidth
             id="phoneNumberId"
-            label="Telefon Numarası ID"
+            label={t('settings.phone_number_id')}
             name="phoneNumberId"
             value={credentials.phoneNumberId}
             onChange={handleChange}
@@ -98,18 +102,18 @@ const Settings = () => {
             margin="normal"
             fullWidth
             name="accessToken"
-            label="Erişim Anahtarı (Access Token)"
+            label={t('settings.access_token')}
             type={showToken ? 'text' : 'password'}
             id="accessToken"
             value={credentials.accessToken}
             onChange={handleChange}
-            placeholder="Değiştirmek için yeni anahtarı girin"
+            placeholder={t('settings.access_token_placeholder')}
             sx={styledTextField}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
-                    aria-label="toggle token visibility"
+                    aria-label={t('settings.toggle_visibility')}
                     onClick={() => setShowToken(!showToken)}
                     onMouseDown={(e) => e.preventDefault()}
                     edge="end"
@@ -137,7 +141,7 @@ const Settings = () => {
               }
             }}
           >
-            Ayarları Kaydet
+            {t('settings.button')}
           </Button>
         </Box>
       </Paper>

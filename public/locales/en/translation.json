@@ -1,0 +1,67 @@
+{
+  "sidebar": {
+    "messaging": "MESSAGING",
+    "sendMessage": "Send Message",
+    "templates": "TEMPLATES",
+    "listTemplates": "List Templates",
+    "createTemplate": "Create New Template",
+    "account": "ACCOUNT",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "login": {
+    "welcome_to_artibo": "Welcome to Artibo",
+    "login_to_account": "Login to your account",
+    "configuring_account": "Configuring Account...",
+    "login_with_facebook": "Login with Facebook",
+    "fb_login_no_token": "Facebook login failed: No access token received.",
+    "fb_login_fail_generic": "Facebook login failed. Please check your connection and try again."
+  },
+  "sendMessage": {
+    "title": "Send Message",
+    "use_template": "Use Template",
+    "recipient_phone": "Recipient Phone Number",
+    "recipient_phone_placeholder": "e.g., 905551234567",
+    "template": "Template",
+    "no_templates_available": "No templates available.",
+    "variable": "Variable",
+    "your_message": "Your Message",
+    "button": "Send Message",
+    "toast_fetch_error": "Failed to fetch templates.",
+    "toast_send_success": "Message sent successfully! ID: {{id}}",
+    "toast_send_error": "An error occurred while sending the message."
+  },
+  "listTemplates": {
+    "title": "Message Templates",
+    "empty_state_title": "You haven't created any templates yet.",
+    "empty_state_body": "Create your first template to start messaging.",
+    "empty_state_button": "Create Now",
+    "language": "Language"
+  },
+  "createTemplate": {
+    "title": "Create New Message Template",
+    "subtitle": "Use variables like {{1}}, {{2}} for dynamic content.",
+    "template_name": "Template Name",
+    "template_name_helper": "Must be lowercase and use underscores instead of spaces.",
+    "category": "Category",
+    "category_utility": "Utility",
+    "category_marketing": "Marketing",
+    "template_body": "Template Body",
+    "template_body_helper": "Example: Hello {{1}}, your order {{2}} has been shipped.",
+    "button": "Create Template",
+    "toast_create_success": "Template '{{name}}' created successfully!",
+    "toast_create_error": "An error occurred while creating the template."
+  },
+  "settings": {
+    "title": "API Settings",
+    "subtitle": "Enter your WhatsApp Business API credentials here.",
+    "phone_number_id": "Phone Number ID",
+    "access_token": "Access Token",
+    "access_token_placeholder": "Enter new token to update",
+    "button": "Save Settings",
+    "toggle_visibility": "Toggle token visibility",
+    "toast_load_error": "Could not load your saved credentials.",
+    "toast_save_success": "Settings saved successfully!",
+    "toast_save_error": "An error occurred while saving."
+  }
+} 

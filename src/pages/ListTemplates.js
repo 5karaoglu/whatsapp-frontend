@@ -5,6 +5,7 @@ import {
   Container, Typography, Paper, Box, CircularProgress, Chip, Grid, Button, Skeleton
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const statusColors = {
   APPROVED: 'success',
@@ -18,7 +19,8 @@ const SkeletonCard = () => (
     sx={{ 
       p: 3, 
       borderRadius: 'var(--border-radius-lg)', 
-      background: 'var(--white)',
+      background: 'var(--bg-secondary)',
+      transition: 'background-color 0.3s',
       height: '100%'
     }}
   >
@@ -32,6 +34,7 @@ const SkeletonCard = () => (
 );
 
 const ListTemplates = () => {
+  const { t } = useTranslation();
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -59,14 +62,16 @@ const ListTemplates = () => {
         p: 4, 
         mt: 4, 
         borderRadius: 'var(--border-radius-lg)',
-        border: '2px dashed var(--grey)'
+        border: '2px dashed var(--border-color)',
+        background: 'var(--bg-secondary)',
+        transition: 'background-color 0.3s, border-color 0.3s',
       }}
     >
       <Typography variant="h6" gutterBottom>
-        Henüz şablon oluşturmadınız.
+        {t('listTemplates.empty_state_title')}
       </Typography>
       <Typography color="textSecondary" sx={{ mb: 3 }}>
-        Mesajlaşmaya başlamak için ilk şablonunuzu oluşturun.
+        {t('listTemplates.empty_state_body')}
       </Typography>
       <Button 
         component={Link} 
@@ -78,7 +83,7 @@ const ListTemplates = () => {
           background: 'var(--primary-gradient)',
         }}
       >
-        Şimdi Oluştur
+        {t('listTemplates.empty_state_button')}
       </Button>
     </Paper>
   );
@@ -87,7 +92,7 @@ const ListTemplates = () => {
     <Container maxWidth="lg">
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 4, mb: 3 }}>
         <Typography variant="h4" component="h1" sx={{ fontWeight: 700 }}>
-          Mesaj Şablonları
+          {t('listTemplates.title')}
         </Typography>
       </Box>
 
@@ -112,7 +117,8 @@ const ListTemplates = () => {
                 sx={{ 
                   p: 3, 
                   borderRadius: 'var(--border-radius-lg)', 
-                  background: 'var(--white)',
+                  background: 'var(--bg-secondary)',
+                  transition: 'background-color 0.3s',
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
@@ -135,8 +141,8 @@ const ListTemplates = () => {
                     {template.name}
                   </Typography>
                 </Box>
-                <Typography variant="body2" sx={{ color: 'var(--dark-grey)', mt: 2 }}>
-                  Dil: {template.language}
+                <Typography variant="body2" sx={{ color: 'var(--text-secondary)', mt: 2 }}>
+                  {t('listTemplates.language')}: {template.language}
                 </Typography>
               </Paper>
             </Grid>

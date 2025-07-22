@@ -3,11 +3,13 @@ import { useAuth } from '../context/AuthContext';
 import FacebookLogin from '@greatsumini/react-facebook-login';
 import { Container, Paper, Typography, Button, CircularProgress, Box } from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import toast from 'react-hot-toast'; // Import toast
+import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
     const { login } = useAuth();
     const [loading, setLoading] = useState(false);
+    const { t } = useTranslation();
 
     const handleFacebookLoginSuccess = async (response) => {
         setLoading(true);
@@ -20,14 +22,14 @@ const Login = () => {
                 setLoading(false);
             }
         } else {
-            toast.error('Facebook login failed: No access token received.');
+            toast.error(t('login.fb_login_no_token'));
             setLoading(false);
         }
     };
 
     const handleFacebookLoginFail = (error) => {
         console.error('Facebook Login Failed!', error);
-        toast.error('Facebook login failed. Please check your connection and try again.');
+        toast.error(t('login.fb_login_fail_generic'));
         setLoading(false);
     };
 
@@ -53,10 +55,10 @@ const Login = () => {
                     }}
                 >
                     <Typography component="h1" variant="h4" sx={{ fontWeight: 700, mb: 1 }}>
-                        Artibo'ya Hoş Geldiniz
+                        {t('login.welcome_to_artibo')}
                     </Typography>
-                    <Typography component="p" sx={{ mb: 3, color: 'var(--dark-grey)' }}>
-                        Hesabınıza giriş yapın
+                    <Typography component="p" sx={{ mb: 3, color: 'var(--text-secondary)' }}>
+                        {t('login.login_to_account')}
                     </Typography>
                     <FacebookLogin
                         appId={process.env.REACT_APP_FACEBOOK_APP_ID || ''}
@@ -81,7 +83,7 @@ const Login = () => {
                                     fontWeight: '600'
                                 }}
                             >
-                                {loading ? 'Hesap Yapılandırılıyor...' : 'Facebook ile Giriş Yap'}
+                                {loading ? t('login.configuring_account') : t('login.login_with_facebook')}
                             </Button>
                         )}
                     />

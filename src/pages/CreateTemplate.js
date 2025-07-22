@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import api from '../services/api';
 import toast from 'react-hot-toast';
 import { TextField, Button, Container, Typography, Paper, Box, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 // Reuse the styled components from SendMessage.js or define them here if not globally available
 const styledTextField = {
   '& .MuiInputBase-root': {
     borderRadius: 'var(--border-radius-sm)',
-    backgroundColor: 'var(--off-white)',
+    backgroundColor: 'var(--input-bg)',
+    transition: 'background-color 0.3s',
   },
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
-      borderColor: '#E0E0E0',
+      borderColor: 'var(--border-color)',
+      transition: 'border-color 0.3s',
     },
     '&:hover fieldset': {
       borderColor: 'var(--purple)',
@@ -32,6 +35,7 @@ const styledSelect = {
 };
 
 const CreateTemplate = () => {
+  const { t } = useTranslation();
   const [templateName, setTemplateName] = useState('');
   const [templateBody, setTemplateBody] = useState('');
   const [category, setCategory] = useState('UTILITY');
@@ -48,50 +52,50 @@ const CreateTemplate = () => {
 
     try {
       const res = await api.post('/whatsapp/create-template', payload);
-      toast.success(`Template '${res.data.name}' created successfully!`);
+      toast.success(t('createTemplate.toast_create_success', { name: res.data.name }));
       // Reset form
       setTemplateName('');
       setTemplateBody('');
       setCategory('UTILITY');
     } catch (err) {
-      toast.error(err.response?.data?.error?.message || 'An error occurred while creating the template.');
+      toast.error(err.response?.data?.error?.message || t('createTemplate.toast_create_error'));
     }
   };
 
   return (
     <Container maxWidth="md">
-      <Paper elevation={0} sx={{ p: 4, mt: 4, borderRadius: 'var(--border-radius-lg)', background: 'var(--white)' }}>
+      <Paper elevation={0} sx={{ p: 4, mt: 4, borderRadius: 'var(--border-radius-lg)', background: 'var(--bg-secondary)', transition: 'background-color 0.3s' }}>
         <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1 }}>
-          Yeni Mesaj Şablonu Oluştur
+          {t('createTemplate.title')}
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-          {'Dinamik içerik için {{1}}, {{2}} gibi değişkenler kullanın.'}
+          {t('createTemplate.subtitle')}
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
-            label="Şablon Adı"
+            label={t('createTemplate.template_name')}
             value={templateName}
             onChange={(e) => setTemplateName(e.target.value.toLowerCase().replace(/\s+/g, '_'))}
             fullWidth
             margin="normal"
             required
-            helperText="Boşluk yerine alt çizgi (_) kullanın ve sadece küçük harf içermelidir."
+            helperText={t('createTemplate.template_name_helper')}
             sx={styledTextField}
           />
           <FormControl fullWidth margin="normal" sx={styledSelect}>
-            <InputLabel id="category-select-label">Kategori</InputLabel>
+            <InputLabel id="category-select-label">{t('createTemplate.category')}</InputLabel>
             <Select
               labelId="category-select-label"
               value={category}
-              label="Kategori"
+              label={t('createTemplate.category')}
               onChange={(e) => setCategory(e.target.value)}
             >
-              <MenuItem value="UTILITY">Fonksiyonel (Utility)</MenuItem>
-              <MenuItem value="MARKETING">Pazarlama (Marketing)</MenuItem>
+              <MenuItem value="UTILITY">{t('createTemplate.category_utility')}</MenuItem>
+              <MenuItem value="MARKETING">{t('createTemplate.category_marketing')}</MenuItem>
             </Select>
           </FormControl>
           <TextField
-            label="Şablon İçeriği"
+            label={t('createTemplate.template_body')}
             value={templateBody}
             onChange={(e) => setTemplateBody(e.target.value)}
             fullWidth
@@ -99,7 +103,7 @@ const CreateTemplate = () => {
             rows={6}
             margin="normal"
             required
-            helperText="Örnek: Merhaba {{1}}, {{2}} numaralı siparişiniz kargoya verildi."
+            helperText={t('createTemplate.template_body_helper')}
             sx={styledTextField}
           />
           <Button 
@@ -117,7 +121,7 @@ const CreateTemplate = () => {
               }
             }}
           >
-            Şablonu Oluştur
+            {t('createTemplate.button')}
           </Button>
         </Box>
       </Paper>

@@ -5,16 +5,19 @@ import {
   TextField, Button, Container, Typography, Paper, Box,
   FormControl, InputLabel, Select, MenuItem, FormGroup, FormControlLabel, Switch
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 // Custom styles for MUI components to match our new design system
 const styledTextField = {
   '& .MuiInputBase-root': {
     borderRadius: 'var(--border-radius-sm)',
-    backgroundColor: 'var(--off-white)',
+    backgroundColor: 'var(--input-bg)',
+    transition: 'background-color 0.3s',
   },
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
-      borderColor: '#E0E0E0',
+      borderColor: 'var(--border-color)',
+      transition: 'border-color 0.3s',
     },
     '&:hover fieldset': {
       borderColor: 'var(--purple)',
@@ -47,6 +50,7 @@ const styledSwitch = {
 };
 
 const SendMessage = () => {
+  const { t } = useTranslation();
   const [to, setTo] = useState('');
   const [message, setMessage] = useState('');
   const [isTemplate, setIsTemplate] = useState(false);
@@ -61,12 +65,12 @@ const SendMessage = () => {
           const { data } = await api.get('/whatsapp/templates');
           setTemplates(data.data || []);
         } catch (err) {
-          toast.error('Failed to fetch templates.');
+          toast.error(t('sendMessage.toast_fetch_error'));
         }
       };
       fetchTemplates();
     }
-  }, [isTemplate]);
+  }, [isTemplate, t]);
 
   const handleTemplateChange = (e) => {
     const templateName = e.target.value;
@@ -98,9 +102,9 @@ const SendMessage = () => {
         payload = { to, type: 'text', text: { body: message } };
       }
       const res = await api.post('/whatsapp/send-message', payload);
-      toast.success(`Message sent successfully! ID: ${res.data?.data?.messages?.[0]?.id || 'N/A'}`);
+      toast.success(t('sendMessage.toast_send_success', { id: res.data?.data?.messages?.[0]?.id || 'N/A' }));
     } catch (err) {
-      toast.error(err.response?.data?.error?.message || 'An error occurred.');
+      toast.error(err.response?.data?.error?.message || t('sendMessage.toast_send_error'));
     }
   };
   
@@ -109,42 +113,42 @@ const SendMessage = () => {
 
   return (
     <Container maxWidth="md">
-      <Paper elevation={0} sx={{ p: 4, mt: 4, borderRadius: 'var(--border-radius-lg)', background: 'var(--white)' }}>
+      <Paper elevation={0} sx={{ p: 4, mt: 4, borderRadius: 'var(--border-radius-lg)', background: 'var(--bg-secondary)', transition: 'background-color 0.3s' }}>
         <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 3 }}>
-          Mesaj Gönder
+          {t('sendMessage.title')}
         </Typography>
         <FormGroup sx={{ mb: 2 }}>
           <FormControlLabel
             control={<Switch sx={styledSwitch} checked={isTemplate} onChange={(e) => setIsTemplate(e.target.checked)} />}
-            label="Şablon Kullan"
+            label={t('sendMessage.use_template')}
           />
         </FormGroup>
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
-            label="Alıcı Telefon Numarası"
+            label={t('sendMessage.recipient_phone')}
             value={to}
             onChange={(e) => setTo(e.target.value)}
             fullWidth
             margin="normal"
             required
-            placeholder="Örn: 905551234567"
+            placeholder={t('sendMessage.recipient_phone_placeholder')}
             sx={styledTextField}
           />
 
           {isTemplate ? (
             <>
               <FormControl fullWidth margin="normal" sx={styledSelect}>
-                <InputLabel id="template-select-label">Şablon</InputLabel>
+                <InputLabel id="template-select-label">{t('sendMessage.template')}</InputLabel>
                 <Select
                   labelId="template-select-label"
                   value={selectedTemplate}
-                  label="Şablon"
+                  label={t('sendMessage.template')}
                   onChange={handleTemplateChange}
                   displayEmpty
                 >
                   {templates.length === 0 ? (
                     <MenuItem disabled value="">
-                      <em>Kullanılabilir şablon bulunamadı.</em>
+                      <em>{t('sendMessage.no_templates_available')}</em>
                     </MenuItem>
                   ) : (
                     templates.map((template) => (
@@ -158,7 +162,7 @@ const SendMessage = () => {
               {[...Array(variableCount)].map((_, i) => (
                   <TextField
                       key={i}
-                      label={`Değişken ${i + 1}`}
+                      label={`${t('sendMessage.variable')} ${i + 1}`}
                       name={`param${i}`}
                       value={templateParams[`param${i}`] || ''}
                       onChange={handleParamChange}
@@ -170,7 +174,7 @@ const SendMessage = () => {
             </>
           ) : (
             <TextField
-              label="Mesajınız"
+              label={t('sendMessage.your_message')}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               fullWidth
@@ -197,7 +201,7 @@ const SendMessage = () => {
               }
             }}
           >
-            Mesajı Gönder
+            {t('sendMessage.button')}
           </Button>
         </Box>
       </Paper>

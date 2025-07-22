@@ -1,0 +1,67 @@
+{
+  "sidebar": {
+    "messaging": "MESAJLAŞMA",
+    "sendMessage": "Mesaj Gönder",
+    "templates": "ŞABLONLAR",
+    "listTemplates": "Şablonları Listele",
+    "createTemplate": "Yeni Şablon Oluştur",
+    "account": "HESAP",
+    "settings": "Ayarlar",
+    "logout": "Çıkış Yap"
+  },
+  "login": {
+    "welcome_to_artibo": "Artibo'ya Hoş Geldiniz",
+    "login_to_account": "Hesabınıza giriş yapın",
+    "configuring_account": "Hesap Yapılandırılıyor...",
+    "login_with_facebook": "Facebook ile Giriş Yap",
+    "fb_login_no_token": "Facebook girişi başarısız: Erişim anahtarı alınamadı.",
+    "fb_login_fail_generic": "Facebook girişi başarısız. Lütfen bağlantınızı kontrol edip tekrar deneyin."
+  },
+  "sendMessage": {
+    "title": "Mesaj Gönder",
+    "use_template": "Şablon Kullan",
+    "recipient_phone": "Alıcı Telefon Numarası",
+    "recipient_phone_placeholder": "Örn: 905551234567",
+    "template": "Şablon",
+    "no_templates_available": "Kullanılabilir şablon bulunamadı.",
+    "variable": "Değişken",
+    "your_message": "Mesajınız",
+    "button": "Mesajı Gönder",
+    "toast_fetch_error": "Şablonlar getirilemedi.",
+    "toast_send_success": "Mesaj başarıyla gönderildi! ID: {{id}}",
+    "toast_send_error": "Mesaj gönderilirken bir hata oluştu."
+  },
+  "listTemplates": {
+    "title": "Mesaj Şablonları",
+    "empty_state_title": "Henüz şablon oluşturmadınız.",
+    "empty_state_body": "Mesajlaşmaya başlamak için ilk şablonunuzu oluşturun.",
+    "empty_state_button": "Şimdi Oluştur",
+    "language": "Dil"
+  },
+  "createTemplate": {
+    "title": "Yeni Mesaj Şablonu Oluştur",
+    "subtitle": "Dinamik içerik için {{1}}, {{2}} gibi değişkenler kullanın.",
+    "template_name": "Şablon Adı",
+    "template_name_helper": "Boşluk yerine alt çizgi (_) kullanın ve sadece küçük harf içermelidir.",
+    "category": "Kategori",
+    "category_utility": "Fonksiyonel (Utility)",
+    "category_marketing": "Pazarlama (Marketing)",
+    "template_body": "Şablon İçeriği",
+    "template_body_helper": "Örnek: Merhaba {{1}}, {{2}} numaralı siparişiniz kargoya verildi.",
+    "button": "Şablonu Oluştur",
+    "toast_create_success": "'{{name}}' şablonu başarıyla oluşturuldu!",
+    "toast_create_error": "Şablon oluşturulurken bir hata oluştu."
+  },
+  "settings": {
+    "title": "API Ayarları",
+    "subtitle": "WhatsApp Business API bilgilerinizi buraya girin.",
+    "phone_number_id": "Telefon Numarası ID",
+    "access_token": "Erişim Anahtarı (Access Token)",
+    "access_token_placeholder": "Değiştirmek için yeni anahtarı girin",
+    "button": "Ayarları Kaydet",
+    "toggle_visibility": "Token görünürlüğünü değiştir",
+    "toast_load_error": "Kaydedilmiş ayarlar yüklenemedi.",
+    "toast_save_success": "Ayarlar başarıyla kaydedildi!",
+    "toast_save_error": "Ayarlar kaydedilirken bir hata oluştu."
+  }
+} 
