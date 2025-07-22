@@ -22,7 +22,13 @@ const ProtectedRoute = ({ children }) => {
   return (
     <div style={{ display: 'flex' }}>
       <Sidebar />
-      <main style={{ flexGrow: 1, padding: '24px', marginLeft: '260px' }}>
+      <main style={{ 
+        flexGrow: 1, 
+        padding: '24px', 
+        marginLeft: '260px', 
+        backgroundColor: 'var(--bg-primary)',
+        transition: 'background-color 0.3s'
+      }}>
         {children}
       </main>
     </div>
