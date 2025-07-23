@@ -51,7 +51,7 @@ const CreateTemplate = () => {
     };
 
     try {
-      const res = await api.post('/whatsapp/create-template', payload);
+      const res = await api.post('/whatsapp/templates', payload);
       toast.success(t('createTemplate.toast_create_success', { name: res.data.name }));
       // Reset form
       setTemplateName('');
