@@ -32,17 +32,23 @@ const styledTextField = {
 
 const Settings = () => {
   const { t } = useTranslation();
-  const [credentials, setCredentials] = useState({ phoneNumberId: '', accessToken: '' });
+  const [credentials, setCredentials] = useState({ 
+    phoneNumberId: '', 
+    accessToken: '',
+    whatsappBusinessAccountId: '' 
+  });
   const [showToken, setShowToken] = useState(false);
 
   useEffect(() => {
     const fetchCredentials = async () => {
       try {
         const { data } = await api.get('/credentials');
-        if (data) {
+        if (data.success && data.data) {
           setCredentials({
-            phoneNumberId: data.phoneNumberId || '',
-            accessToken: data.accessToken ? '********' : '',
+            phoneNumberId: data.data.phoneNumberId || '',
+            // If a token exists, display a placeholder; otherwise, show empty.
+            accessToken: data.data.accessToken ? '********' : '',
+            whatsappBusinessAccountId: data.data.whatsappBusinessAccountId || ''
           });
         }
       } catch (err) {
@@ -97,6 +103,21 @@ const Settings = () => {
             onChange={handleChange}
             autoFocus
             sx={styledTextField}
+          />
+          <TextField
+            margin="normal"
+            fullWidth
+            id="whatsappBusinessAccountId"
+            label={t('settings.whatsapp_business_account_id')}
+            name="whatsappBusinessAccountId"
+            value={credentials.whatsappBusinessAccountId}
+            disabled // This field is populated automatically and should not be edited
+            sx={{
+              ...styledTextField,
+              '& .MuiInputBase-root.Mui-disabled': {
+                backgroundColor: 'var(--disabled-bg)',
+              },
+            }}
           />
           <TextField
             margin="normal"

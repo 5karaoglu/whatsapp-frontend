@@ -53,12 +53,12 @@
     "toast_create_error": "Şablon oluşturulurken bir hata oluştu."
   },
   "settings": {
-    "title": "API Ayarları",
-    "subtitle": "WhatsApp Business API bilgilerinizi buraya girin.",
+    "title": "Ayarlar",
+    "subtitle": "WhatsApp Business API bilgilerinizi buradan yönetin. Mesaj göndermek için bu bilgiler gereklidir.",
     "phone_number_id": "Telefon Numarası ID",
-    "access_token": "Erişim Anahtarı (Access Token)",
-    "access_token_placeholder": "Değiştirmek için yeni anahtarı girin",
-    "button": "Ayarları Kaydet",
+    "whatsapp_business_account_id": "WhatsApp Business Hesap ID (Otomatik doldurulur)",
+    "access_token": "Erişim Token'ı",
+    "access_token_placeholder": "Güncellemek için yeni token girin",
     "toggle_visibility": "Token görünürlüğünü değiştir",
     "toast_load_error": "Kaydedilmiş ayarlar yüklenemedi.",
     "toast_save_success": "Ayarlar başarıyla kaydedildi!",

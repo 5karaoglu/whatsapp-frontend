@@ -53,12 +53,12 @@
     "toast_create_error": "An error occurred while creating the template."
   },
   "settings": {
-    "title": "API Settings",
-    "subtitle": "Enter your WhatsApp Business API credentials here.",
+    "title": "Settings",
+    "subtitle": "Manage your WhatsApp Business API credentials here. These are required to send messages.",
     "phone_number_id": "Phone Number ID",
+    "whatsapp_business_account_id": "WhatsApp Business Account ID (Auto-populated)",
     "access_token": "Access Token",
     "access_token_placeholder": "Enter new token to update",
-    "button": "Save Settings",
     "toggle_visibility": "Toggle token visibility",
     "toast_load_error": "Could not load your saved credentials.",
     "toast_save_success": "Settings saved successfully!",
