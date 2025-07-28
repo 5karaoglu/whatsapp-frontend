@@ -12,14 +12,19 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem('authToken');
     if (token) {
       try {
-        const decodedUser = jwtDecode(token);
-        const isExpired = decodedUser.exp * 1000 < Date.now();
+        const decoded = jwtDecode(token);
+        const isExpired = decoded.exp * 1000 < Date.now();
         if (isExpired) {
           logout();
         } else {
-          setUser(decodedUser);
+          setUser({
+            id: decoded.id,
+            displayName: decoded.displayName,
+            profilePictureUrl: decoded.profilePictureUrl,
+          });
           api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         }
       } catch (error) {
@@ -28,7 +33,7 @@ export const AuthProvider = ({ children }) => {
       }
     }
     setLoading(false);
-  }, [token]);
+  }, []); // Removed token from dependency array to run only once on mount
 
   const login = useCallback(async (fbResponse) => {
     const accessToken = fbResponse.accessToken;
@@ -36,8 +41,12 @@ export const AuthProvider = ({ children }) => {
       const res = await api.post('/auth/facebook', { access_token: accessToken });
       const { token: jwtToken } = res.data;
       localStorage.setItem('authToken', jwtToken);
-      const decodedUser = jwtDecode(jwtToken);
-      setUser(decodedUser);
+      const decoded = jwtDecode(jwtToken);
+      setUser({
+        id: decoded.id,
+        displayName: decoded.displayName,
+        profilePictureUrl: decoded.profilePictureUrl,
+      });
       setToken(jwtToken);
       api.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
       navigate('/templates'); // Redirect to main app page on success

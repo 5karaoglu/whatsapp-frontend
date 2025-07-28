@@ -30,6 +30,46 @@
   -webkit-text-fill-color: transparent;
 }
 
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 1rem;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-initials {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.profile-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  text-align: center;
+}
+
 .sidebar-nav {
   flex-grow: 1;
 }

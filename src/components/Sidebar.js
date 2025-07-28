@@ -6,8 +6,18 @@ import { useTranslation } from 'react-i18next'; // Import useTranslation
 import './Sidebar.css'; 
 import { FiMessageSquare, FiFileText, FiPlusSquare, FiSettings, FiLogOut, FiSun, FiMoon } from 'react-icons/fi';
 
+// Helper to get initials from a name
+const getInitials = (name = '') => {
+  const nameParts = name.split(' ');
+  if (nameParts.length > 1) {
+    return `${nameParts[0][0]}${nameParts[nameParts.length - 1][0]}`.toUpperCase();
+  }
+  // Fallback for single names or empty strings
+  return name ? name.substring(0, 2).toUpperCase() : '';
+};
+
 const Sidebar = () => {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth(); // 'user' object now includes displayName and profilePictureUrl
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const { t, i18n } = useTranslation(); // Initialize useTranslation
@@ -26,6 +36,18 @@ const Sidebar = () => {
       <div className="sidebar-header">
         <h1 className="sidebar-logo">Artibo</h1>
       </div>
+
+      <div className="profile-section">
+        <div className="profile-avatar">
+          {user?.profilePictureUrl ? (
+            <img src={user.profilePictureUrl} alt={user.displayName} className="profile-image" />
+          ) : (
+            <div className="profile-initials">{getInitials(user?.displayName)}</div>
+          )}
+        </div>
+        <span className="profile-name">{user?.displayName || 'Loading...'}</span>
+      </div>
+
       <nav className="sidebar-nav">
         <p className="nav-category">{t('sidebar.messaging')}</p>
         <NavLink to="/" end className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
