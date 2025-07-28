@@ -33,18 +33,18 @@
 /* Profile Section Styles */
 .profile-section {
   display: flex;
-  flex-direction: row; /* Align items horizontally */
-  align-items: center;  /* Center items vertically */
-  padding: 1rem 1.5rem; /* Adjust padding */
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem 1.5rem; /* Match horizontal padding with nav items */
   border-bottom: 1px solid var(--border-color);
-  margin-bottom: 1rem;
+  margin-bottom: 1rem; /* Space before nav items */
 }
 
 .profile-avatar {
-  width: 40px;  /* Reduce avatar size */
-  height: 40px; /* Reduce avatar size */
-  margin-right: 1rem; /* Add space between avatar and name */
-  margin-bottom: 0; /* Remove bottom margin */
+  width: 40px;
+  height: 40px;
+  margin-right: 1rem;
+  margin-bottom: 0;
   border-radius: 50%;
   background-color: var(--primary-color);
   display: flex;
@@ -60,16 +60,17 @@
 }
 
 .profile-initials {
-  font-size: 1rem; /* Adjust font size for smaller avatar */
+  font-size: 1rem;
   font-weight: 600;
   color: #fff;
 }
 
 .profile-name {
-  font-size: 1rem; /* Adjust font size */
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text-color);
-  text-align: left; /* Align text to the left */
+  text-align: left;
+  line-height: 1.2; /* Improve line spacing for multi-line names */
 }
 
 .sidebar-nav {
