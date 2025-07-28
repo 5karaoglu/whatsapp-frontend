@@ -30,24 +30,26 @@
   -webkit-text-fill-color: transparent;
 }
 
+/* Profile Section Styles */
 .profile-section {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 1.5rem 1.5rem;
+  flex-direction: row; /* Align items horizontally */
+  align-items: center;  /* Center items vertically */
+  padding: 1rem 1.5rem; /* Adjust padding */
   border-bottom: 1px solid var(--border-color);
   margin-bottom: 1rem;
 }
 
 .profile-avatar {
-  width: 80px;
-  height: 80px;
+  width: 40px;  /* Reduce avatar size */
+  height: 40px; /* Reduce avatar size */
+  margin-right: 1rem; /* Add space between avatar and name */
+  margin-bottom: 0; /* Remove bottom margin */
   border-radius: 50%;
   background-color: var(--primary-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.75rem;
   overflow: hidden;
 }
 
@@ -58,16 +60,16 @@
 }
 
 .profile-initials {
-  font-size: 2rem;
+  font-size: 1rem; /* Adjust font size for smaller avatar */
   font-weight: 600;
   color: #fff;
 }
 
 .profile-name {
-  font-size: 1.1rem;
+  font-size: 1rem; /* Adjust font size */
   font-weight: 600;
   color: var(--text-color);
-  text-align: center;
+  text-align: left; /* Align text to the left */
 }
 
 .sidebar-nav {
