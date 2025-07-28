@@ -45,7 +45,7 @@ const Sidebar = () => {
             <div className="profile-initials">{getInitials(user?.displayName)}</div>
           )}
         </div>
-        <span className="profile-name">{user?.displayName || 'Loading...'}</span>
+        <span className="profile-name">{user?.displayName}</span>
       </div>
 
       <nav className="sidebar-nav">
